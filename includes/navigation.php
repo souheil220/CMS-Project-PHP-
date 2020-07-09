@@ -26,7 +26,7 @@
                     ?>
 
                     <li>
-                        <a href="admin">Admin</a>
+                        <a href="admin/index.php">Admin</a>
                     </li>
                      <!--<li>
                     <li>
