@@ -50,9 +50,9 @@
                 $query.= "post_image = '{$post_image}' ";
                 $query.= "WHERE post_id = {$post_id} ";
 
-                $update_post = mysqli_query($connection,$query);
+                $update_user = mysqli_query($connection,$query);
 
-                confirm($update_post);
+                confirm($update_user);
             }
               
 ?>
