@@ -8,6 +8,16 @@ function confirm($queryResult)
     }
 }
 
+function numberOfRows($tableName){
+    global $connection;
+    $query = "SELECT * FROM $tableName";
+    $select_tableName_query = mysqli_query($connection,$query);
+    $rowNumbers = mysqli_num_rows($select_tableName_query);
+
+   return $rowNumbers;
+}
+
+
 function insert_categories()
 {
     global $connection;
