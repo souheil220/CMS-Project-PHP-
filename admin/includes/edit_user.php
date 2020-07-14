@@ -49,6 +49,8 @@ if (isset($_POST['update_user'])) {
     $update_post = mysqli_query($connection, $query);
 
     confirm($update_post);
+
+    echo "<div class='alert alert-success' >User Edited: <a href='users.php'>View Users</a></div>";
 }
 
 ?>

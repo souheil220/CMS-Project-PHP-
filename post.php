@@ -60,8 +60,9 @@
                             $comment_author = $_POST['comment_author'];
                             $comment_email  = $_POST['comment_email'];
                             $comment_content = $_POST['comment_content'];
-                            
-                            $query = "INSERT INTO comments (comment_post_id,comment_date,comment_author,comment_email,comment_content,comment_status) ";
+
+                            if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content)){
+                                    $query = "INSERT INTO comments (comment_post_id,comment_date,comment_author,comment_email,comment_content,comment_status) ";
                             $query.= "VALUES ($the_post_id,now(),'$comment_author', '$comment_email','$comment_content','Unapproved') "; 
                             
                             $create_comment_query = mysqli_query($connection,$query);
@@ -78,6 +79,11 @@
                         if(!$update_comment_count){
                                 die("Error ".mysqli_error($connection));
                             }
+                            }else{
+                                echo "<script>alert('Fields should not be empty')</script>";
+                            }
+                            
+                        
                         
                         }   
 

@@ -53,6 +53,8 @@
                 $update_user = mysqli_query($connection,$query);
 
                 confirm($update_user);
+
+                echo "<div class='alert alert-success' >Post Edited: <a href='posts.php'>View Posts</a></div>";
             }
               
 ?>
@@ -87,8 +89,18 @@
     </div>
 
     <div class="form-group">
-        <label for="author">Post Status</label>
-        <input value="<?php echo $post_status?>" type="text" class="form-control" name="post_status">
+        <select name="post_status" id="post_status">
+            <option value="<?php echo $post_status ?>"><?php echo $post_status ?></option>
+            <?php
+            if ($post_status == 'published') {
+                echo "<option value='draft'>draft</option>";
+            } else {
+                echo "<option value='published'>published</option>";
+            }
+            ?>
+
+
+        </select>
     </div>
 
     <div class="form-group">
@@ -105,7 +117,7 @@
 
     <div class="form-group">
         <label for="posy_content">Post Content</label>
-        <textarea  class="form-control" name="post_content" id="" cols="30" rows="10"><?php echo $post_content?></textarea> 
+        <textarea  class="form-control" name="post_content" id="body" cols="30" rows="10"><?php echo $post_content?></textarea> 
     </div>
 
     <div class="form-group">

@@ -18,7 +18,8 @@
         $query.= "VALUES ('{$post_title}' ,{$post_category_id},'{$post_author}','{$post_status}','{$post_image}','{$post_tags}','{$post_content}',now(),'{$post_comment_count}' ) ";
         $create_post_query = mysqli_query($connection,$query);
         confirm($create_post_query);
-       
+        $post_id = mysqli_insert_id($connection);
+        echo "<div class='alert alert-success' >Post Created: <a href='../post.php?p_id=$post_id'>View Post</a></div>";
     }
 ?>
 
@@ -29,6 +30,8 @@
     </div>
 
     <div class="form-group">
+        
+    <label for="category">Category</label><br>
       <select name="post_category" id="post_category">
           <?php
           
@@ -52,8 +55,12 @@
     </div>
 
     <div class="form-group">
-        <label for="author">Post Status</label>
-        <input type="text" class="form-control" name="post_status">
+        <label for="post_status">Post Status</label><br>
+        <select name="post_status" id="post_status">
+            <option value="draft">Select Option</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+        </select>
     </div>
 
     <div class="form-group">
@@ -68,7 +75,7 @@
 
     <div class="form-group">
         <label for="posy_content">Post Content</label>
-        <textarea class="form-control" name="post_content" id="" cols="30" rows="10"></textarea> 
+        <textarea class="form-control" name="post_content" id="body" cols="30" rows="10"></textarea> 
     </div>
 
     <div class="form-group">

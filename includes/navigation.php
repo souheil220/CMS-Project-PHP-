@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -24,17 +25,24 @@
                               echo "<li><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
                         }   
                     ?>
-
-                    <li>
-                        <a href="admin/index.php">Admin</a>
-                    </li>
-                     <!--<li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>-->
+                    <?php
+                    if(isset($_SESSION['role'] )){
+                         if($_SESSION['role']==='admin'){
+                            echo "<li><a href='admin/index.php'>Admin</a></li>";
+                        }
+                    }
+                       
+                    ?>
+                    
+                   <?php
+                    if(isset($_SESSION['role'] )){
+                        if(isset($_GET['p_id'])){
+                            $post_id = $_GET['p_id'];
+                            echo "<li><a href='admin/posts.php?source=edit_post&p_id=$post_id'>Edit Post</a></li>";
+                        }
+                    }
+                   ?>
+                   
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
