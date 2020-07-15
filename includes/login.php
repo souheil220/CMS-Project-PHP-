@@ -30,7 +30,7 @@ if (isset($_POST["login"])) {
 
     if ($username !== $db_username || $pass !== $db_pass) {
 
-        //  header("Location: ../index.php");
+          header("Location: ../index.php");
 
     } else {
 
