@@ -11,6 +11,8 @@ while ($row = mysqli_fetch_assoc($select_users_by_id)) {
     $username =  $row['username'];
     $firstName =  $row['firstname'];
     $lastName =  $row['user_lastname'];
+    $randSalt = $row['randSalt'];
+    $password = $row['user_password'];
     $role =  $row['user_role'];
     $avatar =  $row['user_image'];
     $user_email =  $row['user_email'];
@@ -26,6 +28,7 @@ if (isset($_POST['update_user'])) {
     $avatar_temp = $_FILES['user_image']['tmp_name'];
     $user_email = $_POST['user_email'];
     $password = $_POST['password'];
+    $hashed_password = crypt($password,$randSalt);
 
     if (empty($avatar)) {
         $query = "SELECT * FROM users WHERE user_id= $the_user_id";
@@ -43,7 +46,7 @@ if (isset($_POST['update_user'])) {
     $query .= "user_lastname = '{$user_lastName}', ";
     $query .= "user_image = '{$avatar}', ";
     $query .= "user_email = '{$user_email}', ";
-    $query .= "user_password = '{$password}' ";
+    $query .= "user_password = '{$hashed_password}' ";
     $query .= "WHERE user_id = {$the_user_id} ";
 
     $update_post = mysqli_query($connection, $query);
@@ -63,7 +66,7 @@ if (isset($_POST['update_user'])) {
 
     <div class="form-group">
         <select name="user_role" id="user_role">
-            <option value="subscriber"><?php echo $role ?></option>
+            <option value="<?php echo $role ?>"><?php echo $role ?></option>
             <?php
             if ($role == 'admin') {
                 echo "<option value='subscriber'>Subscriber</option>";
@@ -99,7 +102,7 @@ if (isset($_POST['update_user'])) {
 
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" id=""></input>
+        <input value="<?php echo $password?>" type="password" class="form-control" name="password" id=""></input>
     </div>
 
     <div class="form-group">

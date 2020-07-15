@@ -33,6 +33,8 @@
                     }
                        
                     ?>
+
+                    <li><a href='registration.php'>Register</a></li>
                     
                    <?php
                     if(isset($_SESSION['role'] )){

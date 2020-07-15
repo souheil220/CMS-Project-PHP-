@@ -10,6 +10,8 @@
         $user_email = $_POST['user_email'];
         $password = $_POST['password'];
 
+        $password = crypt($password,'$2y$10$iusesomecrazystrings22');
+
         move_uploaded_file($avatar_temp,"../images/$avatar");
 
         $query = "INSERT INTO users (username ,user_role,firstname,user_lastname,user_image,user_email,user_password) ";

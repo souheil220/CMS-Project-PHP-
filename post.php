@@ -61,6 +61,8 @@
                             $comment_email  = $_POST['comment_email'];
                             $comment_content = $_POST['comment_content'];
 
+                               
+
                             if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content)){
                                     $query = "INSERT INTO comments (comment_post_id,comment_date,comment_author,comment_email,comment_content,comment_status) ";
                             $query.= "VALUES ($the_post_id,now(),'$comment_author', '$comment_email','$comment_content','Unapproved') "; 
@@ -80,6 +82,7 @@
                                 die("Error ".mysqli_error($connection));
                             }
                             }else{
+
                                 echo "<script>alert('Fields should not be empty')</script>";
                             }
                             
