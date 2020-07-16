@@ -34,6 +34,7 @@ function user_online()
 
 user_online();
 
+
 function confirm($queryResult)
 {
     global $connection;

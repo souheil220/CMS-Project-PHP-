@@ -21,7 +21,6 @@
 <?php 
     if (isset($_POST['update_user'])) {
         $username = $_POST['username'];
-        $user_role = $_POST['user_role'];
         $firstName = $_POST['firstName'];
         $user_lastName = $_POST['user_lastName'];
         $avatar = $_FILES['user_image']['name'];
@@ -40,7 +39,6 @@
     
         $query = "UPDATE users SET ";
         $query .= "username = '{$username}', ";
-        $query .= "user_role = '{$user_role}', ";
         $query .= "firstname = '{$firstName}', ";
         $query .= "user_lastname = '{$user_lastName}', ";
         $query .= "user_image = '{$avatar}', ";
@@ -78,21 +76,7 @@
         <input value="<?php echo $username ?>" type="text" class="form-control" name="username">
     </div>
 
-    <div class="form-group">
-        <select name="user_role" id="user_role">
-            <option value="subscriber"><?php echo $role ?></option>
-            <?php
-            if ($role == 'admin') {
-                echo "<option value='subscriber'>Subscriber</option>";
-            } else {
-                echo "<option value='admin'>Admin</option>";
-            }
-            ?>
-
-
-        </select>
-    </div>
-
+    
     <div class="form-group">
         <label for="firstName">First Name</label>
         <input value="<?php echo $firstName ?>" type="text" class="form-control" name="firstName">
@@ -116,7 +100,7 @@
 
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" id=""></input>
+        <input autocomplete="off" type="password" class="form-control" name="password" id=""></input>
     </div>
 
     <div class="form-group">

@@ -102,7 +102,7 @@ if (isset($_POST['update_user'])) {
 
     <div class="form-group">
         <label for="password">Password</label>
-        <input value="<?php echo $password?>" type="password" class="form-control" name="password" id=""></input>
+        <input autocomplete="off" type="password" class="form-control" name="password" id=""></input>
     </div>
 
     <div class="form-group">

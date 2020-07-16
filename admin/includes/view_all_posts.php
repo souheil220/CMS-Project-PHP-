@@ -20,7 +20,7 @@ if (isset($_POST['checkBoxArray'])) {
                 $select_post_query = mysqli_query($connection, $query);
                 confirm($select_post_query);
 
-                while($row = mysqli_fetch_array($select_post_query)){
+                while ($row = mysqli_fetch_array($select_post_query)) {
                     $post_category_id = $row['post_category_id'];
                     $post_title = $row['post_title'];
                     $post_author = $row['post_author'];
@@ -32,8 +32,8 @@ if (isset($_POST['checkBoxArray'])) {
                     $post_status = $row['post_status'];
                 }
                 $query = "INSERT INTO posts(post_category_id ,post_title ,post_author,post_date,post_image,post_content,post_tags,post_comment_count,post_status) ";
-                $query.= "VALUES ('$post_category_id', '$post_title', '$post_author','$post_date','$post_image','$post_content','$post_tags','$post_comment_count','$post_status' )";
-                $clone_query = mysqli_query($connection,$query);
+                $query .= "VALUES ('$post_category_id', '$post_title', '$post_author','$post_date','$post_image','$post_content','$post_tags','$post_comment_count','$post_status' )";
+                $clone_query = mysqli_query($connection, $query);
                 confirm($clone_query);
                 break;
 
@@ -115,7 +115,16 @@ if (isset($_POST['checkBoxArray'])) {
                 echo "<td>{$post_status}</td>";
                 echo "<td><img width=100 class='img-responsive' src='../images/{$post_image}' alt=''></td>";
                 echo "<td>{$post_tags}</td>";
-                echo "<td>{$post_comment_count}</td>";
+                $query = "SELECT * FROM comments WHERE comment_post_id = $post_id";
+                $send_comment_query = mysqli_query($connection, $query);
+               
+                $row = mysqli_fetch_array($send_comment_query);
+                if(isset($row['comment_id'])){
+                    $comment_id = $row['comment_id'];
+                }
+           
+                $count_comment = mysqli_num_rows($send_comment_query);
+                echo "<td><a href='post_comments.php?p_id=$post_id'>$count_comment</a></td>";
                 echo "<td>{$post_views_counts}</td>";
                 echo "<td>{$post_date}</td>";
                 echo "<td><a href='../post.php?p_id={$post_id}'>View Post</a></td>";
