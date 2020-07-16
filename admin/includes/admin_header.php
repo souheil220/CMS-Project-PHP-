@@ -3,7 +3,6 @@
 <?php ob_start()?>
 <?php session_start()?>
 <?php
-    echo $_SESSION['role'];
     if(!isset($_SESSION['role'])){
             header('Location: ../index.php');
         

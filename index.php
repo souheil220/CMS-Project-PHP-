@@ -11,8 +11,30 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
+
+            
+
             <?php
-                $query = "SELECT * FROM posts WHERE post_status='published'";
+                $per_page = 5;
+                if(isset($_GET['page'])){
+                    $page = $_GET['page'];
+                }else{
+                    $page = 1;
+                }
+
+                if($page == 1){
+                    $page_1  = 0;
+                }else{
+                    $page_1 = ($page * $per_page) - $per_page;
+                }
+
+                $select_post_count = "SELECT * FROM posts where post_status = 'published' " ;
+                $find_count = mysqli_query($connection,$select_post_count);
+                $count = mysqli_num_rows($find_count);
+
+                $count = ceil($count / $per_page) ;
+
+                $query = "SELECT * FROM posts WHERE post_status='published' LIMIT $page_1,$per_page";
                 $select_all_posts_query = mysqli_query($connection,$query);
                 if(mysqli_num_rows($select_all_posts_query)<=0){
                     echo"<h1 class=text-center>Sorry No Posts</h1>";
@@ -83,5 +105,21 @@
         <!-- /.row -->
 
         <hr>
+
+        <ul class="pager">
+
+                <?php
+                    for($i=1;$i<=$count;$i++){
+                        
+                       
+                        if($i==$page){
+                            echo "<li><a class='active_link href='index.php?page=$i'>$i</a></li>";
+                        }else{
+                            echo "<li><a href='index.php?page=$i'>$i</a></li>";
+                        }
+                        
+                    }
+                ?>
+        </ul>
 
    <?php include "includes/footer.php"?>
