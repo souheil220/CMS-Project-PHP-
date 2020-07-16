@@ -2,6 +2,8 @@
 
 <div id="wrapper">
 
+
+
     <!-- Navigation -->
     <?php include "includes/admin_navbar.php" ?>
 
@@ -16,6 +18,8 @@
                         Welcome To Admin
                         <small> <?php echo $_SESSION['username'] ?></small>
                     </h1>
+
+                   
                     <ol class="breadcrumb">
                         <li>
                             <i class="fa fa-dashboard"></i> <a href="index.html">Dashboard</a>
@@ -141,24 +145,24 @@
             </div>
 
             <?php
-                $query = "SELECT * FROM posts WHERE post_status = 'draft' ";
-                $select_all_drafted_posts = mysqli_query($connection,$query);
-                $post_draft_count = mysqli_num_rows($select_all_drafted_posts);
-                
-                $query = "SELECT * FROM posts WHERE post_status = 'published' ";
-                $select_all_published_posts = mysqli_query($connection,$query);
-                $post_published_count = mysqli_num_rows($select_all_published_posts);
-                
-                $query = "SELECT * FROM comments WHERE comment_status = 'unapproved' ";
-                $select_all_unapproved_comments = mysqli_query($connection,$query);
-                $unapproved_comment_count = mysqli_num_rows($select_all_unapproved_comments);
-                
-                $query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
-                $select_all_subscriber_users = mysqli_query($connection,$query);
-                $subscriber_user_count = mysqli_num_rows($select_all_subscriber_users);
+            $query = "SELECT * FROM posts WHERE post_status = 'draft' ";
+            $select_all_drafted_posts = mysqli_query($connection, $query);
+            $post_draft_count = mysqli_num_rows($select_all_drafted_posts);
+
+            $query = "SELECT * FROM posts WHERE post_status = 'published' ";
+            $select_all_published_posts = mysqli_query($connection, $query);
+            $post_published_count = mysqli_num_rows($select_all_published_posts);
+
+            $query = "SELECT * FROM comments WHERE comment_status = 'unapproved' ";
+            $select_all_unapproved_comments = mysqli_query($connection, $query);
+            $unapproved_comment_count = mysqli_num_rows($select_all_unapproved_comments);
+
+            $query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
+            $select_all_subscriber_users = mysqli_query($connection, $query);
+            $subscriber_user_count = mysqli_num_rows($select_all_subscriber_users);
 
 
-            
+
             ?>
 
 
@@ -176,8 +180,8 @@
                             ['data', 'count'],
 
                             <?php
-                            $element_text = ["Posts","Published Posts","Drafted Pots", "Comments","Pending Comments", "Users", "Subscribers", "Categories"];
-                            $element_count = [$postNumbers,$post_published_count,$post_draft_count , $commentNumbers,$unapproved_comment_count, $userNumber,$subscriber_user_count, $categoriesNumbers];
+                            $element_text = ["Posts", "Published Posts", "Drafted Pots", "Comments", "Pending Comments", "Users", "Subscribers", "Categories"];
+                            $element_count = [$postNumbers, $post_published_count, $post_draft_count, $commentNumbers, $unapproved_comment_count, $userNumber, $subscriber_user_count, $categoriesNumbers];
 
                             for ($i = 0; $i < sizeof($element_text); $i++) {
                                 echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]},],";

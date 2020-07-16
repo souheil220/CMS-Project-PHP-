@@ -1,20 +1,55 @@
 <?php
 
-function confirm($queryResult)
+function user_online()
 {
-    global $connection;
-    if(!$queryResult){
-        die("Error ".mysqli_error($connection));
+    if (isset($_GET['online_users'])) {
+        global $connection;
+        if (!$connection) {
+            session_start();
+            include("../includes/db.php");
+            $session = session_id();
+            $time = time();
+            $time_out_in_seconds = 5;
+            $time_out = $time - $time_out_in_seconds;
+
+            $query = "SELECT * FROM users_online WHERE user_sessions = '$session'";
+            $send_query = mysqli_query($connection, $query);
+            confirm($send_query);
+            $count = mysqli_num_rows($send_query);
+
+
+            if ($count == 0) {
+                mysqli_query($connection, "INSERT INTO users_online(user_sessions,user_time) VALUES ('$session','$time')");
+            } else {
+                mysqli_query($connection, "UPDATE users_online SET user_time = '$time' WHERE user_sessions = '$session'");
+            }
+
+            $users_online_query  = mysqli_query($connection, "SELECT * FROM users_online WHERE user_time >'$time_out'");
+
+            echo $count_user = mysqli_num_rows($users_online_query);
+        }
     }
 }
 
-function numberOfRows($tableName){
+
+user_online();
+
+function confirm($queryResult)
+{
+    global $connection;
+    if (!$queryResult) {
+        die("Error " . mysqli_error($connection));
+    }
+}
+
+function numberOfRows($tableName)
+{
     global $connection;
     $query = "SELECT * FROM $tableName";
-    $select_tableName_query = mysqli_query($connection,$query);
+    $select_tableName_query = mysqli_query($connection, $query);
     $rowNumbers = mysqli_num_rows($select_tableName_query);
 
-   return $rowNumbers;
+    return $rowNumbers;
 }
 
 
