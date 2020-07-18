@@ -43,7 +43,17 @@
                     while($row=mysqli_fetch_assoc($select_all_posts_query)){
                     $post_id=  $row['post_id'];
                     $post_title=  $row['post_title'];
-                    $post_author=  $row['post_author'];
+                    $post_author=  $row['post_user'];
+                    $query1 = "SELECT firstname,user_lastname FROM users WHERE username = '$post_author'";
+                    $select_all_users = mysqli_query($connection,$query1);
+                    if(!$select_all_users){
+                        die("Error ".mysqli_error($select_all_users));
+                    }
+                    while($row1=mysqli_fetch_assoc($select_all_users)){
+                        $firstName = $row1['firstname'];
+                        $lastName = $row1['user_lastname'];
+
+                    }
                     $post_date=  $row['post_date'];
                     $post_image=  $row['post_image'];
                     $post_content= substr($row['post_content'],0,300) ;
@@ -65,7 +75,7 @@
                     <a href="post.php?p_id=<?php echo $post_id?>"><?php echo $post_title?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="author_post.php?author=<?php echo $post_author?>"><?php echo $post_author?></a>
+                    by <a href="author_post.php?author=<?php echo $post_author?>"><?php fandLname($post_author);?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date?></p>
                 <hr>

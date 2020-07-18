@@ -34,6 +34,21 @@ function user_online()
 
 user_online();
 
+function fandLname($post_author)
+{
+    global $connection;
+    $query = "SELECT firstname,user_lastname FROM users WHERE username = '$post_author'";
+    $select_all_users = mysqli_query($connection, $query);
+    if (!$select_all_users) {
+        die("Error " . mysqli_error($select_all_users));
+    }
+    while ($row1 = mysqli_fetch_assoc($select_all_users)) {
+        $firstName = $row1['firstname'];
+        $lastName = $row1['user_lastname'];
+    }
+    echo  $firstName ." ". $lastName;
+
+}
 
 function confirm($queryResult)
 {

@@ -1,4 +1,5 @@
 <?php include "includes/header.php" ?>
+
 <?php include "includes/db.php" ?>
 <!-- Navigation -->
 <?php include "includes/navigation.php" ?>
@@ -19,12 +20,13 @@
 
 
 
-            $query = "SELECT * FROM posts WHERE post_author= '$the_post_author' ";
+            $query = "SELECT * FROM posts WHERE post_user= '$the_post_author' ";
             $select_all_posts_query = mysqli_query($connection, $query);
             while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                 $post_id = $row['post_id'];
                 $post_title =  $row['post_title'];
-                $post_author =  $row['post_author'];
+                $post_author =  $row['post_user'];
+                
                 $post_date =  $row['post_date'];
                 $post_image =  $row['post_image'];
                 $post_content= substr($row['post_content'],0,300) ;
@@ -40,7 +42,7 @@
                     <a href="post.php?p_id=<?php echo $post_id?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                    by <?php echo $post_author ?>
+                    by <?php fandLname($post_author);?>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date ?></p>
                 <hr>

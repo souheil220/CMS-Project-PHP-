@@ -3,7 +3,7 @@
        
         $post_title = $_POST['title'];
         $post_category_id = $_POST['post_category'];
-        $post_author = $_POST['author'];
+        $post_user = $_POST['users'];
         $post_status = $_POST['post_status'];
         $post_image = $_FILES['image']['name'];
         $post_image_temp = $_FILES['image']['tmp_name'];
@@ -14,8 +14,8 @@
 
         move_uploaded_file($post_image_temp,"../images/$post_image");
 
-        $query = "INSERT INTO posts (post_title ,post_category_id,post_author,post_status,post_image,post_tags,post_content,post_date,post_comment_count) ";
-        $query.= "VALUES ('{$post_title}' ,{$post_category_id},'{$post_author}','{$post_status}','{$post_image}','{$post_tags}','{$post_content}',now(),'{$post_comment_count}' ) ";
+        $query = "INSERT INTO posts (post_title ,post_category_id,post_user,post_status,post_image,post_tags,post_content,post_date,post_comment_count) ";
+        $query.= "VALUES ('{$post_title}' ,{$post_category_id},'{$post_user}','{$post_status}','{$post_image}','{$post_tags}','{$post_content}',now(),'{$post_comment_count}' ) ";
         $create_post_query = mysqli_query($connection,$query);
         confirm($create_post_query);
         $post_id = mysqli_insert_id($connection);
@@ -48,11 +48,28 @@
           
       </select>
     </div>
-
     <div class="form-group">
+
+    <label for="users">Users</label><br>
+      <select name="users" id="users">
+          <?php
+          
+               $query = "SELECT * FROM users ";
+               $select_users = mysqli_query($connection, $query);
+               confirm($select_users);
+               while ($row = mysqli_fetch_assoc($select_users)) {
+                   $username =  $row['username'];
+
+                   echo "<option value='$username'>$username</option>";
+                }
+          ?>
+          
+      </select>
+    </div>
+    <!-- <div class="form-group">
         <label for="author">Post Author</label>
         <input type="text" class="form-control" name="author">
-    </div>
+    </div> -->
 
     <div class="form-group">
         <label for="post_status">Post Status</label><br>
