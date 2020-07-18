@@ -24,6 +24,7 @@
                     echo "<li><a href='category.php?category=$cat_id'>{$cat_title}</a></li>";
                 }
                 ?>
+              
                 <?php
                 if (isset($_SESSION['role'])) {
                     if ($_SESSION['role'] === 'admin') {
@@ -55,6 +56,7 @@
                     }
                 }
                 ?>
+                  <li><a href='contact.php'>Contact</a></li>
 
             </ul>
         </div>
