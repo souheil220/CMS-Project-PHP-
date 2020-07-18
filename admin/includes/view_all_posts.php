@@ -24,7 +24,7 @@ if (isset($_POST['checkBoxArray'])) {
                 while ($row = mysqli_fetch_array($select_post_query)) {
                     $post_category_id = $row['post_category_id'];
                     $post_title = $row['post_title'];
-                    $post_author = $row['post_author'];
+                    $post_author = $row['post_user'];
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
                     $post_content = $row['post_content'];
@@ -32,7 +32,7 @@ if (isset($_POST['checkBoxArray'])) {
                     $post_comment_count = $row['post_comment_count'];
                     $post_status = $row['post_status'];
                 }
-                $query = "INSERT INTO posts(post_category_id ,post_title ,post_author,post_date,post_image,post_content,post_tags,post_comment_count,post_status) ";
+                $query = "INSERT INTO posts(post_category_id ,post_title ,post_user,post_date,post_image,post_content,post_tags,post_comment_count,post_status) ";
                 $query .= "VALUES ('$post_category_id', '$post_title', '$post_author','$post_date','$post_image','$post_content','$post_tags','$post_comment_count','$post_status' )";
                 $clone_query = mysqli_query($connection, $query);
                 confirm($clone_query);

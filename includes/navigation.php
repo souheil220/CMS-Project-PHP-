@@ -49,7 +49,7 @@
                 ?>
 
                 <?php
-                if (isset($_SESSION['role'])) {
+                if (isset($_SESSION['role']) && $_SESSION['role']=='admin') {
                     if (isset($_GET['p_id'])) {
                         $post_id = $_GET['p_id'];
                         echo "<li><a href='admin/posts.php?source=edit_post&p_id=$post_id'>Edit Post</a></li>";

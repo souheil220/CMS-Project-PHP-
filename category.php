@@ -15,14 +15,22 @@
 
                 if(isset($_GET['category'])){
                     $post_category_id = $_GET['category'];
-                }
 
-                $query = "SELECT * FROM posts WHERE post_category_id=  $post_category_id ";
+                    if (isset($_SESSION['role']) && ($_SESSION['role'] == 'admin')) {
+                        $query = "SELECT * FROM posts WHERE post_category_id=  $post_category_id ";
+                    } else {
+                        $query = "SELECT * FROM posts WHERE post_id= $the_post_id AND post_status = 'published'";
+                    }
+
+               
                 $select_all_posts_query = mysqli_query($connection,$query);
+                if(mysqli_num_rows($select_all_posts_query)< 1){
+                    echo"<h1 class=text-center>Sorry no post with that Category</h1>";
+                }else{
                 while($row=mysqli_fetch_assoc($select_all_posts_query)){
                     $post_id=  $row['post_id'];
                     $post_title=  $row['post_title'];
-                    $post_author=  $row['post_author'];
+                    $post_author=  $row['post_user'];
                     $post_date=  $row['post_date'];
                     $post_image=  $row['post_image'];
                     $post_content= substr($row['post_content'],0,300)
@@ -38,7 +46,7 @@
                     <a href="post.php?p_id=<?php echo $post_id?>"><?php echo $post_title?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author?></a>
+                    by <a href="index.php"><?php fandLname($post_author)?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date?></p>
                 <hr>
@@ -49,7 +57,10 @@
 
                 <hr>
                    
-           <?php   }   ?> 
+           <?php   }  } } else{
+
+               header('Location:index.php');
+           }?> 
            
 
                 
