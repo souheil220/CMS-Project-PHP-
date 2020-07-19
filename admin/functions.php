@@ -1,8 +1,9 @@
 <?php
 
-function escape($string){
+function escape($string)
+{
     global $connection;
-    return mysqli_real_escape_string($connection,trim(($string)));
+    return mysqli_real_escape_string($connection, trim(($string)));
 }
 
 
@@ -52,8 +53,7 @@ function fandLname($post_author)
         $firstName = $row1['firstname'];
         $lastName = $row1['user_lastname'];
     }
-    echo  $firstName ." ". $lastName;
-
+    echo  $firstName . " " . $lastName;
 }
 
 function confirm($queryResult)
@@ -62,6 +62,15 @@ function confirm($queryResult)
     if (!$queryResult) {
         die("Error " . mysqli_error($connection));
     }
+}
+
+function countRows($table,$column,$condition)
+{
+    global $connection;
+    $query = "SELECT * FROM $table WHERE $column = '$condition' ";
+    $select_all = mysqli_query($connection, $query);
+    $count = mysqli_num_rows($select_all);
+    return $count;
 }
 
 function numberOfRows($tableName)

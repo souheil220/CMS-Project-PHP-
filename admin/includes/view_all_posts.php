@@ -83,13 +83,17 @@ if (isset($_POST['checkBoxArray'])) {
         </thead>
         <tbody>
             <?php
-            $query = "SELECT * FROM posts  ORDER BY post_id DESC";
+
+            $query  = "SELECT posts.post_id,posts.post_title,posts.post_user,posts.post_date,posts.post_image,posts.post_category_id, ";
+            $query .= "posts.post_tags,posts.post_status,posts.post_comment_count,posts.post_views_counts,categories.cat_id,categories.cat_title ";
+            $query .= "FROM posts ";
+            $query .= " LEFT JOIN categories ON posts.post_category_id = categories.cat_id  ORDER BY posts.post_id DESC";
+
             $select_all_posts = mysqli_query($connection, $query);
 
             while ($row = mysqli_fetch_assoc($select_all_posts)) {
                 $post_id =  $row['post_id'];
                 $post_title =  $row['post_title'];
-                
                 $post_user =  $row['post_user'];
                 $post_date =  $row['post_date'];
                 $post_image =  $row['post_image'];
@@ -98,44 +102,34 @@ if (isset($_POST['checkBoxArray'])) {
                 $post_status =  $row['post_status'];
                 $post_comment_count =  $row['post_comment_count'];
                 $post_views_counts =  $row['post_views_counts'];
+                $cat_title =  $row['cat_title'];
+                $post_views_counts =  $row['post_views_counts'];
                 echo "<tr>";
             ?>
                 <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $post_id ?>'></td>
             <?php
                 echo "<td>{$post_id}</td>";
-
                 if (isset($post_user) && !empty($post_user)) {
                     echo "<td>{$post_user}</td>";
                 }
-
                 echo "<td>{$post_title}</td>";
-
-                $query = "SELECT * FROM categories WHERE cat_id= $post_category_id";
-                $select_categories_id = mysqli_query($connection, $query);
-
-                while ($row = mysqli_fetch_assoc($select_categories_id)) {
-                    $cat_id =  $row['cat_id'];
-                    $cat_title =  $row['cat_title'];
-                    echo "<td>{$cat_title}</td>";
-                }
+                echo "<td>{$cat_title}</td>";
                 echo "<td>{$post_status}</td>";
                 echo "<td><img width=100 class='img-responsive' src='../images/{$post_image}' alt=''></td>";
                 echo "<td>{$post_tags}</td>";
+
                 $query = "SELECT * FROM comments WHERE comment_post_id = $post_id";
                 $send_comment_query = mysqli_query($connection, $query);
-
                 $row = mysqli_fetch_array($send_comment_query);
                 if (isset($row['comment_id'])) {
                     $comment_id = $row['comment_id'];
                 }
-
                 $count_comment = mysqli_num_rows($send_comment_query);
                 echo "<td><a href='post_comments.php?p_id=$post_id'>$count_comment</a></td>";
                 echo "<td>{$post_views_counts}</td>";
                 echo "<td>{$post_date}</td>";
                 echo "<td><a href='../post.php?p_id={$post_id}'>View Post</a></td>";
                 echo "<td><a  href='?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-//                echo "<td><a onClick=\" javaScript: return confirm('Are you sure you want to delete ?');\" href='?delete={$post_id}'>Delete</a></td>";
                 echo "<td><a rel ='$post_id' href='javascript:void(0)' class = 'delete_link'>Delete</a></td>";
                 echo "</tr>";
             }
@@ -162,11 +156,11 @@ if (isset($_GET['delete'])) {
 
 
 <script>
-    $(document).ready(function () {
-        $('.delete_link').on('click',function(){
-            var id  = $(this).attr("rel");
-            var delete_url = 'posts.php?delete='+ id+ " ";
-            $('.modal_delete_link').attr('href',delete_url);
+    $(document).ready(function() {
+        $('.delete_link').on('click', function() {
+            var id = $(this).attr("rel");
+            var delete_url = 'posts.php?delete=' + id + " ";
+            $('.modal_delete_link').attr('href', delete_url);
             $('#myModal').modal('show');
         });
     });

@@ -45,11 +45,9 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
 
-                                    <?php
-                                    $postNumbers = numberOfRows('posts');
-                                    echo "<div class='huge'>$postNumbers</div>";
+                                    
+                                    <div class='huge'><?php echo  $postNumbers = numberOfRows('posts');?></div>
 
-                                    ?>
 
 
 
@@ -74,10 +72,9 @@
                                     <i class="fa fa-comments fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <?php
-                                    $commentNumbers = numberOfRows('comments');
-                                    echo "<div class='huge'>$commentNumbers</div>";
-                                    ?>
+                                    
+                                    
+                                    <div class='huge'><?php echo $commentNumbers = numberOfRows('comments');?></div>
                                     <div>Comments</div>
                                 </div>
                             </div>
@@ -99,10 +96,8 @@
                                     <i class="fa fa-user fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <?php
-                                    $userNumber = numberOfRows('users');
-                                    echo "<div class='huge'>$userNumber</div>";
-                                    ?>
+                                   
+                                   <div class='huge'> <?php echo $userNumber = numberOfRows('users');?></div>
                                     <div> User(s)</div>
                                 </div>
                             </div>
@@ -124,11 +119,8 @@
                                     <i class="fa fa-list fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <?php
-                                    $categoriesNumbers = numberOfRows('categories');
-                                    echo "<div class='huge'>$categoriesNumbers</div>";
-
-                                    ?>
+                                    
+                                    <div class='huge'><?php echo $categoriesNumbers = numberOfRows('categories');?></div>
                                     <div>Categories</div>
                                 </div>
                             </div>
@@ -145,21 +137,13 @@
             </div>
 
             <?php
-            $query = "SELECT * FROM posts WHERE post_status = 'draft' ";
-            $select_all_drafted_posts = mysqli_query($connection, $query);
-            $post_draft_count = mysqli_num_rows($select_all_drafted_posts);
+           
+            
+            $post_draft_count = countRows('posts','post_status','draft');
+            $post_published_count = countRows('posts','post_status','published');
+            $unapproved_comment_count = countRows('comments','comment_status','unapproved');
+            $subscriber_user_count = countRows('users','user_role','subscriber');
 
-            $query = "SELECT * FROM posts WHERE post_status = 'published' ";
-            $select_all_published_posts = mysqli_query($connection, $query);
-            $post_published_count = mysqli_num_rows($select_all_published_posts);
-
-            $query = "SELECT * FROM comments WHERE comment_status = 'unapproved' ";
-            $select_all_unapproved_comments = mysqli_query($connection, $query);
-            $unapproved_comment_count = mysqli_num_rows($select_all_unapproved_comments);
-
-            $query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
-            $select_all_subscriber_users = mysqli_query($connection, $query);
-            $subscriber_user_count = mysqli_num_rows($select_all_subscriber_users);
 
 
 
@@ -203,7 +187,7 @@
                         chart.draw(data, google.charts.Bar.convertOptions(options));
                     }
                 </script>
-                <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+                <div id="columnchart_material" style="width: auto; height: 500px;"></div>
             </div>
 
         </div>
